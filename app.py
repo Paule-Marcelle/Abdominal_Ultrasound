@@ -16,22 +16,25 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 from util import config
 
-# Charger le modèle
-model = load_model('model_US.h5')
-
 # Définir la taille de la police souhaitée
 font_size = "30px"
 
 # Définir la police de caractères souhaitée
 font_family = "Times New Roman, serif"
 
+
 # Définir la couleur du texte souhaitée (code hexadécimal)
-text_color = "white"
+text_color = "green"
 
 # Custom style settings
 button_style = f"font-size: 50px; color: white; background-color: #2e6b8e; border-radius: 8px; padding: 10px 20px;"
 
 result_text_style = f"font-size: 30px; color: white; font-family: 'Times New Roman', serif;"
+
+config()
+
+# Charger le modèle
+model = load_model('model_US.h5')
 
 # Fonction de prédiction
 def predict(img):
@@ -48,15 +51,23 @@ def predict(img):
     return prediction
 
 def main():
-    st.title("Application de prediction de grossesse grace aux echographies abdominales")
+    # Définir la taille de la police souhaitée
+    font_size = "30px"
 
+# Définir la police de caractères souhaitée
+    font_family = "Times New Roman, serif"
+
+# Définir la couleur du texte souhaitée (code hexadécimal)
+    text_color = "yellow"
+
+    st.title("Application de Prediction de Grossesse grâce aux Echographies Abdominales")
     # Widget pour télécharger une image
     uploaded_file = st.file_uploader("Uploader une image d'échographie abdominale...", type=["jpg", "png", "jpeg"])
 
     if uploaded_file is not None:
         # Affichez l'image téléchargée
         image = Image.open(uploaded_file)
-        st.image(image, caption="Image téléchargée.", use_column_width=True)
+        st.image(image, caption="Image téléchargée", use_column_width=True)
 
         # Bouton de prédiction
         if st.button("PREDICTION"):
@@ -72,23 +83,20 @@ def main():
             else:
                 detection = "NO PREGNANCY"
 
-                # Définir les paramètres de style
-            font_size = "20px"
-            text_color = "blue"
-            font_family = "Arial"
+
 
     # Utiliser les paramètres de style dans la chaîne HTML
             st.markdown(
-            f'<div style="font-size: {font_size}; color: {text_color}; font-family: {font_family};">'
-            '</div>',
-            unsafe_allow_html=True
+                f'<div style="font-size: {font_size}; color: {text_color}; font-family: {font_family};">'
+                '</div>',
+                unsafe_allow_html=True
             )
        
             st.write(
-                f'<div style="font-size: {font_size}; color: {text_color}; font-family: {font_family};">'
-                f"Diagnostic: {detection} (Probability: {probability:.3f})"
-                '</div>',
-                unsafe_allow_html=True
+                    f'<div style="font-size: {font_size}; color: {text_color}; font-family: {font_family};">'
+                    f"Diagnostic: {detection} (Probability: {probability:.3f})"
+                    '</div>',
+                    unsafe_allow_html=True
                 )   
 
 if __name__ == "__main__":
